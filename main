@@ -1,0 +1,50 @@
+Let's make a game!
+name:Cubing game
+author:Rein and ScrambledRubiks
+desc:TODO
+
+/*
+Conventions to make life easier:
+	Every css class starts with 'c', ex. cStore
+	Every tag starts with 't', ex. tStore
+	Every resource(but especially hidden resources!!) starts with 'r' ex. rSolveTime
+	
+	lmk if you have something else in mind
+*/
+
+Settings
+//background:placeholder.com
+building cost increase:105%
+building cost refund:0% //so that you can't sell algs learned
+
+CSS
+.cStore {
+	top:10%;
+}
+Layout
+//default layout for now
+*main
+  contains:res, buttons
+  *res
+    contains:Resources
+    class:fullWidth
+  *buttons
+    contains:Buttons
+*store
+  contains:buildings, upgrades
+  class:cStore
+  *buildings
+    contains:BulkDisplay, Buildings
+    header:Buildings
+    tooltip origin:left
+  *upgrades
+    contains:Upgrades
+    header:Upgrades
+    costs:hide
+    names:hide
+	
+Buttons
+
+*mainButton
+	name:Big buttons
+	class:bigButton //hasFlares probably wouldn't look too good here???
