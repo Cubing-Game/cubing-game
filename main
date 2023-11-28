@@ -15,7 +15,8 @@ Conventions to make life easier:
 Settings
 //background:placeholder.com
 building cost increase:105%
-building cost refund:0% //so that you can't sell algs learned
+building cost refund:0% 
+//so that you can't sell algs learned
 
 CSS
 .cStore {
@@ -47,4 +48,5 @@ Buttons
 
 *mainButton
 	name:Big buttons
-	class:bigButton //hasFlares probably wouldn't look too good here???
+	class:bigButton
+	//hasFlares probably wouldn't look too good here??? Yeah I agree. -Rein
