@@ -80,7 +80,9 @@
 
 		*mainButton
 			name:Big buttons
-			icon:https://tse4.mm.bing.net/th?id=OIP.uspENrMf-sw9osliNmLuwwHaGl&pid=Api
+			no text
+			no tooltip
+			icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png
 			class:bigButton
 			//hasFlares probably wouldn't look too good here??? Yeah I agree. -Rein
 		
