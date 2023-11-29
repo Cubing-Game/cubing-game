@@ -1,52 +1,112 @@
-Let's make a game!
-name:Cubing game
-author:Rein and ScrambledRubiks
-desc:TODO
+		Let's make a game!
+		name:Cubing game
+		author:Rein and ScrambledRubiks
+		desc:TODO
 
-/*
-Conventions to make life easier:
-	Every css class starts with 'c', ex. cStore
-	Every tag starts with 't', ex. tStore
-	Every resource(but especially hidden resources!!) starts with 'r' ex. rSolveTime
-	
-	lmk if you have something else in mind
-*/
+		/*
+		Conventions to make life easier:
+			Every css class starts with 'c', ex. cStore
+			Every tag starts with 't', ex. tStore
+			Every resource(but especially hidden resources!!) starts with 'r' ex. rSolveTime
+			
+			lmk if you have something else in mind
+		*/
 
-Settings
-//background:placeholder.com
-building cost increase:105%
-building cost refund:0% 
-//so that you can't sell algs learned
+		Settings
+		//background:placeholder.com
+		building cost increase:105%
+		building cost refund:0% 
+		//so that you can't sell algs learned
 
-CSS
-.cStore {
-	top:10%;
-}
-Layout
-//default layout for now
-*main
-  contains:res, buttons
-  *res
-    contains:Resources
-    class:fullWidth
-  *buttons
-    contains:Buttons
-*store
-  contains:buildings, upgrades
-  class:cStore
-  *buildings
-    contains:BulkDisplay, Buildings
-    header:Buildings
-    tooltip origin:left
-  *upgrades
-    contains:Upgrades
-    header:Upgrades
-    costs:hide
-    names:hide
-	
-Buttons
+		CSS
+		#box-buildings, #box-upgrades {
+			top: 50px;
+			bottom: 0px;
+			width: 50%;
+			right: 0%;
+			overflow-x: hidden;
+			overflow-y: scroll;
+			padding-bottom: 48px;
+			position: absolute;
+		}
+		#box-upgrades {
+		right: 50%;
+		//without this the two boxes appear on top of each other
+		}
+		.cCompetitionButton {
+		right: 20px;
+		position: absolute;
+		top: 5px;
+		left: 40%;
+		font-size: 20px;
+		}
+		.cTimers {
+		right: 40%;
+		left: 0%;
+		position: absolute;
+		top: 10px;
+		}
+		Layout
+		*main
+		  contains:res, buttons
 
-*mainButton
-	name:Big buttons
-	class:bigButton
-	//hasFlares probably wouldn't look too good here??? Yeah I agree. -Rein
+		  *res
+			contains:Resources
+			class:fullWidth
+		  *buttons
+			contains:Buttons
+		*store
+		  contains:buildings, upgrades
+		  *buildings
+			contains:BulkDisplay, Buildings
+			header:Methods
+			tooltip origin:left
+			class:cStore
+		  *upgrades
+			contains:Upgrades
+			header:Cubes
+			costs:hide
+			names:hide
+			//having these individual containers allows for overlapping/noninterfering elements
+		*compButtonContainer
+			contains:tag:tCompButton
+			class:cCompetitionButton
+			//CT stands for currency/timer
+		*CTContainer
+			contains:tag:tTimers
+			class:cTimers
+			
+		Buttons
+
+		*mainButton
+			name:Big buttons
+			icon:https://tse4.mm.bing.net/th?id=OIP.uspENrMf-sw9osliNmLuwwHaGl&pid=Api
+			class:bigButton
+			//hasFlares probably wouldn't look too good here??? Yeah I agree. -Rein
+		
+		*compButton
+			name:Go To Competition
+			tags:tCompButton
+			class:cCompetitionButton
+			
+		*currency
+			name:Cubing Dollars
+			text:Cubing Dollars: $[rMoney]
+			tags:tTimers
+		*avgTime
+			name:Average Time
+			text:Average solve time: [rAvgSolveTime]s
+			tag:tTimers
+		
+		*solveTimeRemaining
+			name:Time Remaining in Current solve
+			text: Time Remaining in Solve: [rRemainingTime]s
+			tag:tTimers
+	Resources
+
+		*rAvgSolveTime
+			hidden
+		*rRemainingTime
+			hidden
+		*rMoney
+			hidden
