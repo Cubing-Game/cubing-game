@@ -106,7 +106,7 @@
 			tags:tTimers
 		*avgTime
 			name:Average Time
-			text:Average solve time: [rAvgSolveTime]s
+			text:Average solve time: [rAvgSolveTime].[rAvgSolveTimeMil]s
 			tag:tTimers
 		
 		*solveTimeRemaining
@@ -114,10 +114,22 @@
 			text: Time Remaining in Solve: [rRemainingTime]s
 			tag:tTimers
 	Resources
-
+	*TEMPLATE
+		hidden
+		*rTotalSolveCount
+		on avgcalc:
+		$vTotalTime=rAvgSolveTime*rTotalSolveCount
+		gain 1 rTotalSolveCount
+		lose rAvgSolveTime
+		$vTotalTime=$vTotalTime+rNewestSolveTime
+		$vNewAvg=$vTotalTime/rTotalSolveCount
+		gain ($vNewAvg) rAvgSolveTime
+		*rNewestSolveTime
 		*rAvgSolveTime
-			hidden
+		*rAvgSolveTimeSec
+		is always:floor(rAvgSolveTime/100)
+		*rAvgSolveTimeMil
+		is always:rAvgSolveTime-rAvgSolveTimeSec*100
 		*rRemainingTime
-			hidden
+		//is always:
 		*rMoney
-			hidden
