@@ -124,6 +124,7 @@
 		$vTotalTime=$vTotalTime+rNewestSolveTime
 		$vNewAvg=$vTotalTime/rTotalSolveCount
 		gain ($vNewAvg) rAvgSolveTime
+		end
 		*rNewestSolveTime
 		*rAvgSolveTime
 		*rAvgSolveTimeSec
