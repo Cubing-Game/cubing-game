@@ -58,12 +58,12 @@
 		*store
 		  contains:buildings, upgrades
 		  *buildings
-			contains:BulkDisplay, Buildings
-			header:Methods
+			contains:Buildings
+			header:Learn
 			tooltip origin:left
 			class:cStore
 		  *upgrades
-			contains:Upgrades
+			contains:tag:tCubes
 			header:Cubes
 			costs:hide
 			names:hide
@@ -90,6 +90,15 @@
 			name:Go To Competition
 			tags:tCompButton
 			class:cCompetitionButton
+			/*
+			I guess like...
+			on click:
+				hide :All
+				show tag:tCompLayout
+						or
+				gain 1 rCompToggle
+					then like req:have rCompToggle
+			*/
 			
 		*currency
 			name:Cubing Dollars
