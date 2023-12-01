@@ -113,24 +113,24 @@
 			name:Time Remaining in Current solve
 			text: Time Remaining in Solve: [rRemainingTime]s
 			tag:tTimers
-	Resources
-	*TEMPLATE
-		hidden
+		Resources
+		*TEMPLATE
+			hidden
 		*rTotalSolveCount
-		on avgcalc:
-		$vTotalTime=rAvgSolveTime*rTotalSolveCount
-		gain 1 rTotalSolveCount
-		lose rAvgSolveTime
-		$vTotalTime=$vTotalTime+rNewestSolveTime
-		$vNewAvg=$vTotalTime/rTotalSolveCount
-		gain ($vNewAvg) rAvgSolveTime
-		end
+			// Solve Average calculation
+			on avgcalc:
+				$vTotalTime=rAvgSolveTime*rTotalSolveCount
+				gain 1 rTotalSolveCount
+				lose rAvgSolveTime
+				$vTotalTime=$vTotalTime+rNewestSolveTime
+				$vNewAvg=$vTotalTime/rTotalSolveCount
+				gain ($vNewAvg) rAvgSolveTime
+			end
 		*rNewestSolveTime
 		*rAvgSolveTime
 		*rAvgSolveTimeSec
-		is always:floor(rAvgSolveTime/100)
+			is always:floor(rAvgSolveTime/100)
 		*rAvgSolveTimeMil
-		is always:rAvgSolveTime-rAvgSolveTimeSec*100
+			is always:rAvgSolveTime-rAvgSolveTimeSec*100
 		*rRemainingTime
-		//is always:
 		*rMoney
