@@ -1,82 +1,150 @@
-		Let's make a game!
-		name:Cubing game
-		author:Rein and ScrambledRubiks
-		desc:TODO
+			Let's make a game!
+			name:Cubing game
+			author:Rein and ScrambledRubiks
+			desc:TODO
 
-		/*
-		Conventions to make life easier:
-			Every css class starts with 'c', ex. cStore
-			Every tag starts with 't', ex. tStore
-			Every resource(but especially hidden resources!!) starts with 'r' ex. rSolveTime
-			
-			lmk if you have something else in mind
-		*/
+			/*
+			Conventions to make life easier:
+				Every css class starts with 'c', ex. cStore
+				Every tag starts with 't', ex. tStore
+				Every resource(but especially hidden resources!!) starts with 'r' ex. rSolveTime
+				
+				lmk if you have something else in mind
+			*/
 
-		Settings
-		//background:placeholder.com
-		building cost increase:105%
-		building cost refund:0% 
-		//so that you can't sell algs learned
+			Settings
+			//background:placeholder.com
+			building cost increase:105%
+			building cost refund:0% 
+			//so that you can't sell algs learned
 
-		CSS
-		#box-buildings, #box-upgrades {
-			top: 50px;
-			bottom: 0px;
-			width: 50%;
-			right: 0%;
-			overflow-x: hidden;
-			overflow-y: scroll;
-			padding-bottom: 48px;
+			CSS
+			#box-buildings, #box-upgrades {
+				top: 50px;
+				bottom: 0px;
+				width: 50%;
+				right: 0%;
+				overflow-x: hidden;
+				overflow-y: scroll;
+				padding-bottom: 48px;
+				position: absolute;
+			}
+			#box-upgrades {
+			right: 50%;
+			//without this the two boxes appear on top of each other
+			}
+			.cCompetitionButton {
+			right: 20px;
 			position: absolute;
-		}
-		#box-upgrades {
-		right: 50%;
-		//without this the two boxes appear on top of each other
-		}
-		.cCompetitionButton {
-		right: 20px;
-		position: absolute;
-		top: 5px;
-		left: 40%;
-		font-size: 20px;
-		}
-		.cTimers {
-		right: 40%;
-		left: 0%;
-		position: absolute;
-		top: 10px;
-		}
-		Layout
-		*main
-		  contains:res, buttons
-
-		  *res
-			contains:Resources
-			class:fullWidth
-		  *buttons
-			contains:Buttons
-		*store
-		  contains:buildings, upgrades
-		  *buildings
-			contains:Buildings
-			header:Learn
-			tooltip origin:left
-			class:cStore
-		  *upgrades
-			contains:tag:tCubes
-			header:Cubes
-			costs:hide
-			names:hide
-			//having these individual containers allows for overlapping/noninterfering elements
-		*compButtonContainer
-			contains:tag:tCompButton
-			class:cCompetitionButton
-			//CT stands for currency/timer
-		*CTContainer
-			contains:tag:tTimers
-			class:cTimers
+			top: 5px;
+			left: 40%;
+			font-size: 20px;
+			}
+			.cTimers {
+			right: 40%;
+			left: 0%;
+			position: absolute;
+			top: 10px;
+			}
+			.cCompBG {
+			position:fixed;
+			top:-5px;
+			bottom:-5px;
+			left:-5px;
+			right:-5px;
+			background: rgba(255,255,255,1);
+			/*these RGB values can be changed to whatever but make sure the alpha is always 1 for the background*/
+			}
+			.cCompBG:hover {
+				background: rgba(255,255,255,1);
+			}
+			.cEventsBG {
+				position:fixed;
+				top:50px;
+				right:70%;
+				left:10%;
+				bottom:50%;
+			}
+			.cEvents {
+				position:fixed;
+				top:80px;
+				right:70%;
+				left:10%;
+				bottom:50%;
+			}
+			.cStackTimerBox{
+				position: absolute;
+				bottom: 50px;
+				left: 50px;
+				right: 50px;
+			}
+			.cStackTimer {
+				width: 100%;
+				height: 100px;
+				font-size: 70px;
+				text-align: center;
+				vertical-align: middle;
+			}
+			.cCompCubeButton {
+				bottom: 50%;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				width: 256px;
+				height: 256px;
+				margin-left: 0;
+				margin-top: 0;
+				box-shadow: none;
+				border: none;
+				z-index: 100;
+				background: url(https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png);
+				background-position-x: -10px;
+			}
 			
-		Buttons
+			Layout
+			*main
+			  contains:res, buttons
+
+			  *res
+				contains:Resources
+				class:fullWidth
+			  *buttons
+				contains:Buttons
+			*store
+			  contains:buildings, upgrades
+			  *buildings
+				contains:Buildings
+				header:Learn
+				tooltip origin:left
+				class:cStore
+			  *upgrades
+				contains:tag:tCubes
+				header:Cubes
+				costs:hide
+				names:hide
+				//having these individual containers allows for overlapping/noninterfering elements
+			*compButtonContainer
+				contains:tag:tCompButton
+				class:cCompetitionButton
+				//CT stands for currency/timer
+			*CTContainer
+				contains:tag:tTimers
+				class:cTimers
+			*compBGContainer
+				contains:tag:tCompBG
+			*compEventsBG
+				class:cEventsBG
+				
+				contains:tag:tEventsBG
+			*compEventsBox
+				class:cEvents
+				contains:tag:tEvents
+			*compStackTimerBox
+				class:cStackTimerBox
+				contains:tag:tStackTimer
+			
+				
+	Buttons
 
 		*mainButton
 			name:Big buttons
@@ -90,15 +158,6 @@
 			name:Go To Competition
 			tags:tCompButton
 			class:cCompetitionButton
-			/*
-			I guess like...
-			on click:
-				hide :All
-				show tag:tCompLayout
-						or
-				gain 1 rCompToggle
-					then like req:have rCompToggle
-			*/
 			
 		*currency
 			name:Cubing Dollars
@@ -113,24 +172,24 @@
 			name:Time Remaining in Current solve
 			text: Time Remaining in Solve: [rRemainingTime]s
 			tag:tTimers
-		Resources
-		*TEMPLATE
-			hidden
-		*rTotalSolveCount
-			// Solve Average calculation
-			on avgcalc:
-				$vTotalTime=rAvgSolveTime*rTotalSolveCount
-				gain 1 rTotalSolveCount
-				lose rAvgSolveTime
-				$vTotalTime=$vTotalTime+rNewestSolveTime
-				$vNewAvg=$vTotalTime/rTotalSolveCount
-				gain ($vNewAvg) rAvgSolveTime
-			end
-		*rNewestSolveTime
-		*rAvgSolveTime
-		*rAvgSolveTimeSec
-			is always:floor(rAvgSolveTime/100)
-		*rAvgSolveTimeMil
-			is always:rAvgSolveTime-rAvgSolveTimeSec*100
-		*rRemainingTime
-		*rMoney
+Resources
+			*TEMPLATE
+				hidden
+			*rTotalSolveCount
+				// Solve Average calculation
+				on avgcalc:
+					$vTotalTime=rAvgSolveTime*rTotalSolveCount
+					gain 1 rTotalSolveCount
+					lose rAvgSolveTime
+					$vTotalTime=$vTotalTime+rNewestSolveTime
+					$vNewAvg=$vTotalTime/rTotalSolveCount
+					gain ($vNewAvg) rAvgSolveTime
+				end
+			*rNewestSolveTime
+			*rAvgSolveTime
+			*rAvgSolveTimeSec
+				is always:floor(rAvgSolveTime/100)
+			*rAvgSolveTimeMil
+				is always:rAvgSolveTime-rAvgSolveTimeSec*100
+			*rRemainingTime
+			*rMoney
