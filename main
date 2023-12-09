@@ -86,22 +86,25 @@
 				vertical-align: middle;
 			}
 			.cCompCubeButton {
-				bottom: 50%;
-				position: absolute;
-				left: 50%;
-				top: 50%;
+				transform: translate(0px, 150%);
 				width: 256px;
 				height: 256px;
-				margin-left: 0;
-				margin-top: 0;
-				box-shadow: none;
 				border: none;
 				z-index: 100;
 				background: url(https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png);
 				background-position-x: -10px;
 			}
+			.cCubeContainer {
+				bottom:0%;
+				top:0%;
+				left:0%;
+				right:0%;
+			}
 			
 			Layout
+			*compCubeButtons
+				class:cCubeContainer
+				contains:tag:tCubeButons
 			*main
 			  contains:res, buttons
 
@@ -143,6 +146,7 @@
 				class:cStackTimerBox
 				contains:tag:tStackTimer
 			
+			
 				
 	Buttons
 
@@ -157,6 +161,7 @@
 		*compButton
 			name:Go To Competition
 			tags:tCompButton
+			on click:show tag:tCompLayout
 			class:cCompetitionButton
 			
 		*currency
@@ -172,6 +177,29 @@
 			name:Time Remaining in Current solve
 			text: Time Remaining in Solve: [rRemainingTime]s
 			tag:tTimers
+			*compBG
+				no tooltip
+				name: 
+				tags:tCompLayout tCompBG
+				class:cCompBG
+				hidden
+			*eventsHeader	
+				no tooltip
+				hidden
+				name:Events
+				tags:tEventsBG tCompLayout
+				class:cEventsBG
+			*stackTimer
+				hidden
+				tag:tStackTimer tCompLayout
+				class:cStackTimer
+				text:🖑    [rCompTimeMin]m [rCompTimeSec]s    🖑
+				
+			*compCubeButton3x3
+				hidden
+				tags:tCompLayout tCubeButons
+				class:cCompCubeButton
+				icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png
 Resources
 			*TEMPLATE
 				hidden
@@ -193,3 +221,12 @@ Resources
 				is always:rAvgSolveTime-rAvgSolveTimeSec*100
 			*rRemainingTime
 			*rMoney
+			*rCompTimeMin
+				hidden
+			*rCompTimeSec
+				hidden
+
+	Upgrades
+		*4x4Event
+			tags:tEvents tCompLayout
+			hidden
