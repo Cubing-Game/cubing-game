@@ -166,6 +166,10 @@
 			//hasFlares probably wouldn't look too good here??? Yeah I agree. -Rein
 		*1scram3x3ll
 			name:Scrambled 3x3
+			no text
+			no tooltip
+			icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/scramble3x31ll1.png
+			class:bigButton
 
 		*compButton
 			name:Go To Competition
@@ -212,5 +216,6 @@ Buildings
 			*TEMPLATE
 				hidden
 			*beginnersmethod
-				name:Beginner's Method
+				text:Beginner's Method
 				desc:Placeholder, non-functioning
+				no tooltip
