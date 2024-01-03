@@ -8,7 +8,8 @@
 				Every css class starts with 'c', ex. cStore
 				Every tag starts with 't', ex. tStore
 				Every resource(but especially hidden resources!!) starts with 'r' ex. rSolveTime
-				
+				Every variable starts with 'v' ex. vTotalSolveTime
+
 				lmk if you have something else in mind
 			*/
 
@@ -146,14 +147,26 @@
 				
 	Buttons
 
-		*mainButton
-			name:Big buttons
+		*solved3x3ll
+			name:Solved 3x3
 			no text
 			no tooltip
+			on click:
+			hide this
+			show 1scram3x3ll
+			if (no rStartCheck)
+				toast Oh no! It's been scrambled! How can we solve it?
+				show begginersmethod
+				toast We can learn a method to solve it. How hard can it be?
+				gain rStartCheck
+			end
+			end
 			icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png
 			class:bigButton
 			//hasFlares probably wouldn't look too good here??? Yeah I agree. -Rein
-		
+		*1scram3x3ll
+			name:Scrambled 3x3
+
 		*compButton
 			name:Go To Competition
 			tags:tCompButton
@@ -163,9 +176,10 @@
 			name:Cubing Dollars
 			text:Cubing Dollars: $[rMoney]
 			tags:tTimers
+
 		*avgTime
 			name:Average Time
-			text:Average solve time: [rAvgSolveTime].[rAvgSolveTimeMil]s
+			text:Average solve time: [rAvgSolveTimeSec].[rAvgSolveTimeMil]s
 			tag:tTimers
 		
 		*solveTimeRemaining
@@ -175,6 +189,7 @@
 Resources
 			*TEMPLATE
 				hidden
+			*rStartCheck
 			*rTotalSolveCount
 				// Solve Average calculation
 				on avgcalc:
@@ -193,3 +208,9 @@ Resources
 				is always:rAvgSolveTime-rAvgSolveTimeSec*100
 			*rRemainingTime
 			*rMoney
+Buildings
+			*TEMPLATE
+				hidden
+			*beginnersmethod
+				name:Beginner's Method
+				desc:Placeholder, non-functioning
