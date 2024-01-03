@@ -156,7 +156,7 @@
 			show 1scram3x3ll
 			if (no rStartCheck)
 				toast Oh no! It's been scrambled! How can we solve it?
-				show begginersmethod
+				show beginnersmethod
 				toast We can learn a method to solve it. How hard can it be?
 				gain rStartCheck
 			end
