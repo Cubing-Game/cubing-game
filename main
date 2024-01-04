@@ -165,9 +165,21 @@
 			class:bigButton
 			//hasFlares probably wouldn't look too good here??? Yeah I agree. -Rein
 		*1scram3x3ll
+			hidden
 			name:Scrambled 3x3
 			no text
 			no tooltip
+			on click:
+				if (have beginnersmethod and (random(1,100))>=rCurrentMethodMastery)
+					hide this
+					show solved3x3ll
+					//temporary while I don't have sprites
+				else
+					hide this
+					show 1scram3x3ll
+					toast You try your very best, but you just scrambled it more.
+			end
+			end
 			icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/scramble3x31ll1.png
 			class:bigButton
 
@@ -194,6 +206,18 @@ Resources
 			*TEMPLATE
 				hidden
 			*rStartCheck
+			*rMethodCheck
+			*rCurrentMethod
+			*rCurrentMethodMastery
+				on tick:
+					if (rCurrentMethod=0)
+						rCurrentMethodMastery=0
+					end
+					if (rCurrentMethod=1)
+						rCurrentMethodMastery=rMethod1Mastery
+					end
+				end
+			*rMethod1Mastery
 			*rTotalSolveCount
 				// Solve Average calculation
 				on avgcalc:
