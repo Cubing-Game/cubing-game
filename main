@@ -135,7 +135,6 @@
 				contains:tag:tCompBG
 			*compEventsBG
 				class:cEventsBG
-				
 				contains:tag:tEventsBG
 			*compEventsBox
 				class:cEvents
@@ -172,6 +171,9 @@
 			on click:
 				if (have beginnersmethod and (random(1,100))>=rCurrentMethodMastery)
 					hide this
+					gain (random(0,2)) rMethodMasteryGain
+					lose (random(0,1)) rMethodMasteryGain
+					do mastery with rMethodMasteryGain
 					show solved3x3ll
 					//temporary while I don't have sprites
 				else
@@ -207,6 +209,15 @@ Resources
 				hidden
 			*rStartCheck
 			*rMethodCheck
+			*rMethodMasteryGain
+				on mastery:
+					if (rCurrentMethod=0)
+						toast error 400: method not found
+					end
+					if (rCurrentMethod=1)
+						rMethod1Mastery=rMethodMasteryGain+rMethod1Mastery
+					end
+					end
 			*rCurrentMethod
 			*rCurrentMethodMastery
 				on tick:
@@ -241,5 +252,12 @@ Buildings
 				hidden
 			*beginnersmethod
 				text:Beginner's Method
+				limit:1
 				desc:Placeholder, non-functioning
 				no tooltip
+				on earn:
+					rCurrentMethod=1
+					show tag:tLearnPart1
+					toast So how do i learn it? I have a lot of options...
+				end
+			
