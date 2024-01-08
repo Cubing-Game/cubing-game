@@ -8,7 +8,8 @@
 				Every css class starts with 'c', ex. cStore
 				Every tag starts with 't', ex. tStore
 				Every resource(but especially hidden resources!!) starts with 'r' ex. rSolveTime
-				
+				Every variable starts with 'v' ex. vTotalSolveTime
+
 				lmk if you have something else in mind
 			*/
 
@@ -137,7 +138,6 @@
 				contains:tag:tCompBG
 			*compEventsBG
 				class:cEventsBG
-				
 				contains:tag:tEventsBG
 			*compEventsBox
 				class:cEvents
@@ -150,14 +150,46 @@
 				
 	Buttons
 
-		*mainButton
-			name:Big buttons
+		*solved3x3ll
+			name:Solved 3x3
 			no text
 			no tooltip
+			on click:
+			hide this
+			show 1scram3x3ll
+			if (no rStartCheck)
+				toast Oh no! It's been scrambled! How can we solve it?
+				show beginnersmethod
+				toast We can learn a method to solve it. How hard can it be?
+				gain rStartCheck
+			end
+			end
 			icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png
 			class:bigButton
 			//hasFlares probably wouldn't look too good here??? Yeah I agree. -Rein
-		
+		*1scram3x3ll
+			hidden
+			name:Scrambled 3x3
+			no text
+			no tooltip
+			on click:
+				if (have beginnersmethod and (random(1,100))>=rCurrentMastery)
+					hide this
+					gain (random(0,2)) rMethodMasteryGain
+					lose (random(0,1)) rMethodMasteryGain
+					do mastery with rMethodMasteryGain
+					do maketime with rNewestSolveTime
+					show solved3x3ll
+					//temporary while I don't have sprites
+				else
+					hide this
+					show 1scram3x3ll
+					toast You try your very best, but you just scrambled it more.
+			end
+			end
+			icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/scramble3x31ll1.png
+			class:bigButton
+
 		*compButton
 			name:Go To Competition
 			tags:tCompButton
@@ -168,9 +200,10 @@
 			name:Cubing Dollars
 			text:Cubing Dollars: $[rMoney]
 			tags:tTimers
+
 		*avgTime
 			name:Average Time
-			text:Average solve time: [rAvgSolveTime].[rAvgSolveTimeMil]s
+			text:Average solve time: [rAvgSolveTimeSec].[rAvgSolveTimeMil]s
 			tag:tTimers
 		
 		*solveTimeRemaining
@@ -203,6 +236,28 @@
 Resources
 			*TEMPLATE
 				hidden
+			*rStartCheck
+			*rMethodCheck
+			*rMethodMasteryGain
+				on mastery:
+					if (rCurrentMethod=0)
+						toast error 400: method not found
+					end
+					if (rCurrentMethod=1)
+						rMethod1Mastery=rMethodMasteryGain+rMethod1Mastery
+					end
+					end
+			*rCurrentMethod
+			*rCurrentMastery
+				on tick:
+					if (rCurrentMethod=0)
+						rCurrentMastery=0
+					end
+					if (rCurrentMethod=1)
+						rCurrentMastery=rMethod1Mastery
+					end
+				end
+			*rMethod1Mastery
 			*rTotalSolveCount
 				// Solve Average calculation
 				on avgcalc:
@@ -213,7 +268,29 @@ Resources
 					$vNewAvg=$vTotalTime/rTotalSolveCount
 					gain ($vNewAvg) rAvgSolveTime
 				end
+			*rFirstSolve
 			*rNewestSolveTime
+				on maketime:
+					$vStartingSeed=0
+					if (no rFirstSolve)
+						gain rFirstSolve
+						gain (random(1,10)) $vStartingSeed
+						$vStartingTimeSec=$vStartingSeed*30
+						gain (random(0,9)) $vStartingTimeSec
+						gain (random(0,99)) $vStartingTimeMil //milliseconds are 1/1000th of a second, should this be random(0,999)? Or are the units 10ms?
+					else
+						gain (random(1,10)) $vTimeLuck
+						if ($vTimeLuck<=6)
+							$vTimeDecrease=$vTimeLuck*(random(0,25))
+							lose $vTimeDecrease rNewestSolveTime
+							do avgcalc with rTotalSolveCount
+						else
+							$vTimeIncrease=($vTimeLuck-5)*(random(0,25))
+							gain $vTimeIncrease rNewestSolveTime
+							do avgcalc with rTotalSolveCount
+						end
+					end
+				end
 			*rAvgSolveTime
 			*rAvgSolveTimeSec
 				is always:floor(rAvgSolveTime/100)
@@ -222,11 +299,19 @@ Resources
 			*rRemainingTime
 			*rMoney
 			*rCompTimeMin
-				hidden
 			*rCompTimeSec
-				hidden
 
-	Upgrades
-		*4x4Event
-			tags:tEvents tCompLayout
-			hidden
+Buildings
+			*TEMPLATE
+				hidden
+			*beginnersmethod
+				text:Beginner's Method
+				limit:1
+				desc:Placeholder, non-functioning
+				no tooltip
+				on earn:
+					rCurrentMethod=1
+					show tag:tLearnPart1
+					toast So how do i learn it? I have a lot of options...
+				end
+			
