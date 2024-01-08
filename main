@@ -174,6 +174,7 @@
 					gain (random(0,2)) rMethodMasteryGain
 					lose (random(0,1)) rMethodMasteryGain
 					do mastery with rMethodMasteryGain
+					do maketime with rNewestSolveTime
 					show solved3x3ll
 					//temporary while I don't have sprites
 				else
@@ -239,7 +240,28 @@ Resources
 					$vNewAvg=$vTotalTime/rTotalSolveCount
 					gain ($vNewAvg) rAvgSolveTime
 				end
+			*rFirstSolve
 			*rNewestSolveTime
+				on maketime:
+					if (no rFirstSolve)
+						gain rFirstSolve
+						gain (random(1,10)) $vStartingSeed
+						$vStartingTimeSec=$vStartingSeed*30
+						gain (random(0,9)) $vStartingTimeSec
+						gain (random(0,99)) $vStartingTimeMil
+					else
+						gain (random(1,10)) $vTimeLuck
+						if ($vTimeLuck=<6)
+							$vTimeDecrease=$vTimeLuck*(random(0,25))
+							lose rNewestSolveTime
+							lose $vTimeDecrease rNewestSolveTime 
+						else
+							$vTimeIncrease=($vTimeLuck-5)*(random(0,25))
+							lose rNewestSolveTime
+							gain $vTimeIncrease rNewestSolveTime
+						end
+					end
+				end
 			*rAvgSolveTime
 			*rAvgSolveTimeSec
 				is always:floor(rAvgSolveTime/100)
