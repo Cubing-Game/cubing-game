@@ -253,10 +253,12 @@ Resources
 						gain (random(1,10)) $vTimeLuck
 						if ($vTimeLuck=<6)
 							$vTimeDecrease=$vTimeLuck*(random(0,25))
-							lose $vTimeDecrease rNewestSolveTime 
+							lose $vTimeDecrease rNewestSolveTime
+							do avgcalc with rTotalSolveCount
 						else
 							$vTimeIncrease=($vTimeLuck-5)*(random(0,25))
 							gain $vTimeIncrease rNewestSolveTime
+							do avgcalc with rTotalSolveCount
 						end
 					end
 				end
