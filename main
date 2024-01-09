@@ -274,19 +274,19 @@ Resources
 					$vStartingSeed=0
 					if (no rFirstSolve)
 						gain rFirstSolve
-						gain (random(1,10)) $vStartingSeed
+						$vStartingSeed=(random(1,10)) 
 						$vStartingTimeSec=$vStartingSeed*30
-						gain (random(0,9)) $vStartingTimeSec
-						gain (random(0,99)) $vStartingTimeMil //milliseconds are 1/1000th of a second, should this be random(0,999)? Or are the units 10ms?
+						$vStartingTimeSec=(random(0,9))
+						$vStartingTimeMil=(random(0,99)) //milliseconds are 1/1000th of a second, should this be random(0,999)? Or are the units 10ms? Normally milliseconds in cubing are 2 digit, but ill try to make it 3 digits later.
 					else
-						gain (random(1,10)) $vTimeLuck
+						$vTimeLuck=(random(1,10))
 						if ($vTimeLuck<=6)
 							$vTimeDecrease=$vTimeLuck*(random(0,25))
-							lose $vTimeDecrease rNewestSolveTime
+							lose ($vTimeDecrease) rNewestSolveTime
 							do avgcalc with rTotalSolveCount
 						else
 							$vTimeIncrease=($vTimeLuck-5)*(random(0,25))
-							gain $vTimeIncrease rNewestSolveTime
+							gain ($vTimeIncrease) rNewestSolveTime
 							do avgcalc with rTotalSolveCount
 						end
 					end
