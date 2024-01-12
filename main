@@ -62,16 +62,16 @@
 			.cEventsBG {
 				position:fixed;
 				top:50px;
-				right:70%;
-				left:10%;
+				right:83%;
+				left:5%;
 				bottom:50%;
 			}
 			.cEvents {
-				position:fixed;
-				top:80px;
-				right:70%;
-				left:10%;
-				bottom:50%;
+				position: fixed;
+				top: 80px;
+				right: 83%;
+				left: 5%;
+				bottom: 50%;
 			}
 			.cStackTimerBox{
 				position: absolute;
@@ -88,12 +88,15 @@
 			}
 			.cCompCubeButton {
 				transform: translate(0px, 150%);
+				position:absolute;
 				width: 256px;
 				height: 256px;
 				border: none;
 				z-index: 100;
 				background: url(https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png);
-				background-position-x: -10px;
+			}
+			.cCompCubeButton:hover {
+				background: url(https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png);
 			}
 			.cCubeContainer {
 				bottom:0%;
@@ -101,11 +104,28 @@
 				left:0%;
 				right:0%;
 			}
+			.cCubeCover {
+				transform: translate(0px, 120%);
+				position:absolute;
+				width: 300px;
+				height: 300px;
+				border: none;
+				z-index: 120;
+				background:url(https://www.thecubicle.com/cdn/shop/files/US-Nationals-2023-Cube-Cover.jpg?v=1692210861&width=655);
+				background-position: center;
+				background-size: contain;
+				//all of these background properties are just resizing the temp image and can be changed/removed when there's a final cube cover image
+			}
+			.cCubeCover:hover {
+				background:url(https://www.thecubicle.com/cdn/shop/files/US-Nationals-2023-Cube-Cover.jpg?v=1692210861&width=655);
+				background-position: center;
+				background-size: contain;
+			}
 			
 			Layout
 			*compCubeButtons
 				class:cCubeContainer
-				contains:tag:tCubeButons
+				contains:tag:tCubeButons tag:tCubeCover
 			*main
 			  contains:res, buttons
 
@@ -137,11 +157,11 @@
 			*compBGContainer
 				contains:tag:tCompBG
 			*compEventsBG
-				class:cEventsBG
 				contains:tag:tEventsBG
 			*compEventsBox
 				class:cEvents
 				contains:tag:tEvents
+				//ok because of the way IGM handles these sorts of containers this box will cover anything it's on top of, even if the rest of the comp layout is hidden. for now, I just moved the box so it shouldn't cover up the big button, although if instead we made events buttons instead of upgrades the box could be made to not cover anything up.
 			*compStackTimerBox
 				class:cStackTimerBox
 				contains:tag:tStackTimer
@@ -155,14 +175,14 @@
 			no text
 			no tooltip
 			on click:
-			hide this
-			show 1scram3x3ll
-			if (no rStartCheck)
-				toast Oh no! It's been scrambled! How can we solve it?
-				show beginnersmethod
-				toast We can learn a method to solve it. How hard can it be?
-				gain rStartCheck
-			end
+				hide this
+				show 1scram3x3ll
+				if (no rStartCheck)
+					toast Oh no! It's been scrambled! How can we solve it?
+					show beginnersmethod
+					toast We can learn a method to solve it. How hard can it be?
+					gain rStartCheck
+				end
 			end
 			icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png
 			class:bigButton
@@ -185,7 +205,7 @@
 					hide this
 					show 1scram3x3ll
 					toast You try your very best, but you just scrambled it more.
-			end
+				end
 			end
 			icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/scramble3x31ll1.png
 			class:bigButton
@@ -226,16 +246,35 @@
 				hidden
 				tag:tStackTimer tCompLayout
 				class:cStackTimer
+				name:Begin Solve
 				text:🖑    [rCompTimeMin]m [rCompTimeSec]s    🖑
-				
+				on click:
+					hide cubeCover
+					rCompStartCheck=1
+				end
+				//on tick:
+				//	if(rCompStartCheck=1)
+				//		//TODO before this works we need the alg/method learning system + practice bonus or however it's going to work
+				//	end
+				//end
+			*cubeCover
+				hidden
+				tag:tCubeCover tCompLayout
+				class:cCubeCover
+				name:Cube Cover
+				desc:Click the stack timer to remove the cover and begin solving!
 			*compCubeButton3x3
 				hidden
+				name: 
+				no tooltip
 				tags:tCompLayout tCubeButons
 				class:cCompCubeButton
 				icon:https://file.garden/YmAF2mA2LRQTk_mc/cubinggame/3x3cube.png
+
 Resources
 			*TEMPLATE
 				hidden
+			*rCompStartCheck
 			*rStartCheck
 			*rMethodCheck
 			*rMethodMasteryGain
@@ -277,7 +316,8 @@ Resources
 						$vStartingSeed=(random(1,10)) 
 						$vStartingTimeSec=$vStartingSeed*30
 						$vStartingTimeSec=(random(0,9))
-						$vStartingTimeMil=(random(0,99)) //milliseconds are 1/1000th of a second, should this be random(0,999)? Or are the units 10ms? Normally milliseconds in cubing are 2 digit, but ill try to make it 3 digits later.
+						$vStartingTimeMil=(random(0,99))
+						//milliseconds are 1/1000th of a second, should this be random(0,999)? Or are the units 10ms? Normally milliseconds in cubing are 2 digit, but ill try to make it 3 digits later.
 					else
 						$vTimeLuck=(random(1,10))
 						if ($vTimeLuck<=6)
